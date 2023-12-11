@@ -49,6 +49,16 @@ async function fetchWalletInfo(interaction, address) {
             },
         });
 
+        const cmcResponse = await axios.get('https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest', {
+            headers: {
+                'X-CMC_PRO_API_KEY': COINMARKETCAP_API_KEY,
+            },
+            params: {
+                symbol: 'ETH',
+            },
+        });
+
+        const ethPriceUsd = cmcData.ETH.quote.USD.price;
         const nftData = openSeaResponse.data;
         if (nftData.nfts.length === 0) {
             return interaction.reply(`${address} has no bibs`);
