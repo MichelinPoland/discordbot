@@ -69,14 +69,9 @@ async function fetchWalletInfo(interaction, address) {
 
         for (const nft of nftData.nfts) {
             const id = nft.identifier;
-            const volume = openSeaData.data.total.volume;
-            const volumeUsd = formatLargeNumber(ethPriceUsd * volume);
             const price = await fetchBibPrice(id);
             const name = nft.name;
             const description = nft.description;
-            const sales = openSeaData.data.total.sales;
-            const floorPrice = openSeaData.data.total.floor_price;
-            const floorPriceSymbol = openSeaData.data.total.floor_price_symbol;
             const imageUrl = nft.image_url;
 
             const openseaButton = new ButtonBuilder()
@@ -89,10 +84,11 @@ async function fetchWalletInfo(interaction, address) {
                 .setColor('#0099ff')
                 .setTitle('Shrapnel Operators Collection Stats')
                 .setURL('https://opensea.io/collection/michelin3xplorerclub')
+                .setThumbnail(imageUrl)
                 .setDescription(`
-                    **Volume:** ${formatLargeNumber(volume)} ETH [${volumeUsd}$]\n
-                    **Sales:** ${sales}\n
-                    **Floor Price:** ${floorPrice} ${floorPriceSymbol}
+                    **Name:** ${name}\n
+                    **Description:** ${description}\n
+                    **Owner:**: Wallet here
                 `);
             interaction.followUp({ embeds: [infoEmbed], components: [openseaAction] });
         }
