@@ -112,7 +112,7 @@ async function fetchWalletInfo(interaction, address) {
                 .setThumbnail(imageUrl)
                 .setDescription(`
                     **Name:**: ${name}\n
-                    **Owner:**: \n ${owner}
+                    **Owner:**: ${owner} \n 
                     **Price:**: ${price}\n
                     **Description:** ${description}\n
                 `);
