@@ -57,8 +57,7 @@ async function checkName(address) {
         return null;
     }
 }
-async function fetchWalletInfo(interaction, address) {
-    console.log(`Wallet address is ${address}`);
+async function fetchWalletInfo(interaction, id) {
     try {
         const openSeaResponse = await axios.get(`${OPENSEA_BASE_URL}/orders/ethereum/seaport/listings?asset_contract_address=0x87ec044115cd9e0e09221031441640ee48b3a8f2&limit=1&order_by=created_date&token_ids=${id}`, {
             headers: {
@@ -81,6 +80,7 @@ async function fetchWalletInfo(interaction, address) {
                 symbol: 'ETH',
             },
         });
+        console.log(openSeaData.data)
         const nft = openSeaData.data
         const cmcData = cmcResponse.data.data;
         const ethPriceUsd = cmcData.ETH.quote.USD.price;
@@ -171,7 +171,7 @@ module.exports = {
                 .setDescription('unique NFT number')
                 .setRequired(true)),
 
-    async execute(interaction) {
+    async execute(interaction, id) {
         let input = interaction.options.getString('address');
         if (id > 0 && id < 2401) {
             console.log(true);
