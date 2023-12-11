@@ -7,14 +7,7 @@ const EVERYNAME_API_KEY = process.env.EVERYNAME_API_KEY;
 const OPENSEA_API_KEY = process.env.OPENSEA_API_KEY;
 const COINMARKETCAP_API_KEY = process.env.COINMARKETCAP_API_KEY;
 
-async function checkAccess(interaction) {
-    console.log(interaction.guild.safetyAlertsChannelId)
-    if (interaction.guild.safetyAlertsChannelId == 1181352519872553000 || interaction.guild.safetyAlertsChannelId == 1173516172784836662) {
-        return true;
-    } else {
-        return false;
-    }
-}
+
 
 async function checkDomain(domain) {
     try {
@@ -124,23 +117,17 @@ module.exports = {
 
     async execute(interaction) {
         let input = interaction.options.getString('address');
-        const access = await checkAccess(interaction);
-        if (!access) {
-            return interaction.reply('This bot can only be used in <#1175823293991891044>');
-        }else{
-            if (/^0x[a-fA-F0-9]{40}$/.test(input)) {
-                console.log("Input is valid");
+        if (/^0x[a-fA-F0-9]{40}$/.test(input)) {
+            console.log("Input is valid");
+            await fetchWalletInfo(interaction, input);
+            } else {
+            const domain = await checkDomain(input);
+            if (domain !== null) {
+                await fetchWalletInfo(interaction, domain);
+            } else {
+                console.log(`wallet adress is${input}`)
                 await fetchWalletInfo(interaction, input);
-              } else {
-                const domain = await checkDomain(input);
-                if (domain !== null) {
-                    await fetchWalletInfo(interaction, domain);
-                } else {
-                    console.log(`wallet adress is${input}`)
-                    await fetchWalletInfo(interaction, input);
-                }
-              }
-
+            }
         }
 
     },
