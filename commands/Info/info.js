@@ -52,7 +52,7 @@ async function fetchInfo(interaction) {
             .addComponents(openseaButton);
         const infoEmbed = new EmbedBuilder()
             .setColor('#0099ff')
-            .setTitle('Shrapnel Operators Collection Stats')
+            .setTitle('Michelin 3XPLORE Collection Stats')
             .setURL('https://opensea.io/collection/michelin3xplorerclub')
             .setDescription(`
                 **Volume:** ${formatLargeNumber(volume)} ETH [${volumeUsd}$]\n
