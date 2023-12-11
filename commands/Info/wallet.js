@@ -57,7 +57,8 @@ async function fetchWalletInfo(interaction, address) {
                 symbol: 'ETH',
             },
         });
-
+        
+        const cmcData = cmcResponse.data.data;
         const ethPriceUsd = cmcData.ETH.quote.USD.price;
         const nftData = openSeaResponse.data;
         if (nftData.nfts.length === 0) {
