@@ -107,7 +107,7 @@ async function fetchWalletInfo(interaction, address) {
                 .addComponents(openseaButton);
             const infoEmbed = new EmbedBuilder()
                 .setColor('#0099ff')
-                .setTitle('Shrapnel Operators Collection Stats')
+                .setTitle(`Michelin3Xplorer #${id}`)
                 .setURL('https://opensea.io/collection/michelin3xplorerclub')
                 .setThumbnail(imageUrl)
                 .setDescription(`
