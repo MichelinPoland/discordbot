@@ -90,7 +90,6 @@ async function fetchInfo(interaction, id) {
         }
         const owner = await checkName(address)
 
-        const id = nft.identifier;
         const price = await fetchBibPrice(id);
         const name = nft.name;
         const description = nft.description;
