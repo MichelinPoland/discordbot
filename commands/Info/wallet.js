@@ -10,7 +10,7 @@ const COINMARKETCAP_API_KEY = process.env.COINMARKETCAP_API_KEY;
 
 const OPENSEA_BASE_URL = 'https://api.opensea.io/api/v2';
 const CMC_BASE_URL = 'https://pro-api.coinmarketcap.com/v1';
-const EVERYNAME_API = 'https://api.everyname.xyz/forward';
+const EVERYNAME_API = 'https://api.everyname.xyz';
 
 function formatLargeNumber(number) {
     const value = Number(number).toFixed(0);
@@ -25,13 +25,12 @@ function formatLargeNumber(number) {
 
 async function checkDomain(domain) {
     try {
-        const response = await axios.get(`${EVERYNAME_API}?domain=${domain}`, {
+        const response = await axios.get(`${EVERYNAME_API}/forward?domain=${domain}`, {
             headers: {
                 'Accept': 'application/json',
                 'api-key': EVERYNAME_API_KEY,
             },
         });
-
         return response.data.address;
     } catch (error) {
         console.error('Error checking domain:', error);
@@ -39,6 +38,24 @@ async function checkDomain(domain) {
     }
 }
 
+async function checkName(address) {
+    try {
+        const response = await axios.get(`${EVERYNAME_API}/social-profile?address=${address}&provider=ens`, {
+            headers: {
+                'Accept': 'application/json',
+                'api-key': EVERYNAME_API_KEY,
+            },
+        });
+        if(!response.data.socialHandle){
+            return response.data.socialHandle;
+        }else{
+            return address
+        }
+    } catch (error) {
+        console.error('Error checking domain:', error);
+        return null;
+    }
+}
 async function fetchWalletInfo(interaction, address) {
     console.log(`Wallet address is ${address}`);
     try {
@@ -75,6 +92,7 @@ async function fetchWalletInfo(interaction, address) {
 
         for (const nft of nftData.nfts) {
             const id = nft.identifier;
+            const owner = await checkName(address)
             const price = await fetchBibPrice(id);
             const name = nft.name;
             const description = nft.description;
@@ -93,7 +111,7 @@ async function fetchWalletInfo(interaction, address) {
                 .setThumbnail(imageUrl)
                 .setDescription(`
                     **Name:**: ${name}\n
-                    **Owner:**: \n
+                    **Owner:**: \n ${owner}
                     **Price:**: ${price}\n
                     **Description:** ${description}\n
                 `);
