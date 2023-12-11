@@ -78,11 +78,8 @@ async function fetchInfo(interaction, id) {
         const nft = openSeaData.data
         const cmcData = cmcResponse.data.data;
         const ethPriceUsd = cmcData.ETH.quote.USD.price;
-        const nftData = openSeaResponse.data;
-        if (nftData.nfts.length === 0) {
-            return interaction.reply(`${address} has no bibs`);
-        }
-        const owner = await checkName(address)
+        console.log(nft.owners)
+        const owner = await checkName(nft.owners)
 
         const price = await fetchBibPrice(id);
         const name = nft.name;
