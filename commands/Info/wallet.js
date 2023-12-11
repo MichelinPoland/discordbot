@@ -65,7 +65,7 @@ async function fetchWalletInfo(interaction, address) {
             return interaction.reply(`${address} has no bibs`);
         }
 
-        interaction.reply(`Returning list of all ${nftData.nfts.length} bibs owned by ${address}`);
+        await interaction.reply(`Returning list of all ${nftData.nfts.length} bibs owned by ${address}`);
 
         // Iterate through the "nfts" array and send information for each item
         for (const nft of nftData.nfts) {
