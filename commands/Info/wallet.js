@@ -7,6 +7,15 @@ const EVERYNAME_API_KEY = process.env.EVERYNAME_API_KEY;
 const OPENSEA_API_KEY = process.env.OPENSEA_API_KEY;
 const COINMARKETCAP_API_KEY = process.env.COINMARKETCAP_API_KEY;
 
+function formatLargeNumber(number) {
+    const value = Number(number).toFixed(0);
+    if (value >= 1000000) {
+        return (value / 1000000).toFixed(1) + 'M';
+    } else {
+        return Number(number).toFixed(4);
+    }
+}
+
 async function checkDomain(domain) {
     try {
         const response = await axios.get(`https://api.everyname.xyz/forward?domain=${domain}`, {
