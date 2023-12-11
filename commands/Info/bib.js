@@ -78,7 +78,7 @@ async function fetchInfo(interaction, id) {
         const nft = openSeaData.data.nft
         const cmcData = cmcResponse.data.data;
         const ethPriceUsd = cmcData.ETH.quote.USD.price;
-        const owner = checkName(nft.owners[0].address)
+        const owner = await checkName(nft.owners[0].address)
         const price = await fetchBibPrice(id);
         const name = nft.name;
         const description = nft.description;
