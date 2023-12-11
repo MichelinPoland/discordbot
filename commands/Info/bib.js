@@ -59,13 +59,7 @@ async function checkName(address) {
 }
 async function fetchInfo(interaction, id) {
     try {
-        const openSeaResponse = await axios.get(`${OPENSEA_BASE_URL}/orders/ethereum/seaport/listings?asset_contract_address=0x87ec044115cd9e0e09221031441640ee48b3a8f2&limit=1&order_by=created_date&token_ids=${id}`, {
-            headers: {
-                'accept': 'application/json',
-                'x-api-key': OPENSEA_API_KEY,
-            },
-        });
-        const openSeaData = await axios.get(`${OPENSEA_BASE_URL}/collections/michelin3xplorerclub/stats`, {
+        const openSeaData = await axios.get(`${OPENSEA_BASE_URL}/orders/ethereum/seaport/listings?asset_contract_address=0x87ec044115cd9e0e09221031441640ee48b3a8f2&limit=1&order_by=created_date&token_ids=${id}`, {
             headers: {
                 'accept': 'application/json',
                 'x-api-key': OPENSEA_API_KEY,
