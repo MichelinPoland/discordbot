@@ -41,7 +41,7 @@ async function fetchInfo(interaction) {
         const volumeUsd = formatLargeNumber(ethPriceUsd * volume);
         const sales = openSeaData.data.total.sales;
         const floorPrice = openSeaData.data.total.floor_price;
-        const floorUsd = (ethPriceUsd * floorPrice);
+        const floorUsd = (ethPriceUsd * floorPrice).toFixed(0);
 
         const floorPriceSymbol = openSeaData.data.total.floor_price_symbol;
 
