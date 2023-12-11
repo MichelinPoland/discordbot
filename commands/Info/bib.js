@@ -57,7 +57,7 @@ async function checkName(address) {
         return null;
     }
 }
-async function fetchWalletInfo(interaction, id) {
+async function fetchInfo(interaction, id) {
     try {
         const openSeaResponse = await axios.get(`${OPENSEA_BASE_URL}/orders/ethereum/seaport/listings?asset_contract_address=0x87ec044115cd9e0e09221031441640ee48b3a8f2&limit=1&order_by=created_date&token_ids=${id}`, {
             headers: {
@@ -173,9 +173,10 @@ module.exports = {
 
     async execute(interaction, id) {
         let input = interaction.options.getString('id');
-        if (input > 0 && id < input) {
-            console.log(true);
+        if (input > 0 && input < 2401) {
+            fetchInfo(interaction, input)
         } else {
+            console.log(id)
             interaction.reply({ content: 'Insert correct Id from rnage 0-2400', ephemeral: true });        }
     },
 };
