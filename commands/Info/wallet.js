@@ -9,7 +9,7 @@ const COINMARKETCAP_API_KEY = process.env.COINMARKETCAP_API_KEY;
 
 async function checkAccess(interaction) {
     console.log(interaction.guild.safetyAlertsChannelId)
-    if (interaction.guild.safetyAlertsChannelId == 1175823293991891044 || interaction.guild.safetyAlertsChannelId == 1173516172784836662) {
+    if (interaction.guild.safetyAlertsChannelId == 1181352519872553000 || interaction.guild.safetyAlertsChannelId == 1173516172784836662) {
         return true;
     } else {
         return false;
