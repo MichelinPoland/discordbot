@@ -58,7 +58,7 @@ async function fetchInfo(interaction) {
                 **Sales:** ${sales}\n
                 **Floor Price:** ${floorPrice} ${floorPriceSymbol}
             `);
-        interaction.followUp({ embeds: [infoEmbed], components: [openseaAction] });
+        interaction.reply({ embeds: [infoEmbed], components: [openseaAction] });
     } catch (error) {
         console.error('Error fetching wallet info:', error);
     }
