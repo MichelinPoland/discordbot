@@ -83,6 +83,8 @@ async function fetchWalletInfo(interaction, address) {
                 .setLabel('View on Opensea')
                 .setURL('https://opensea.io/collection/michelin3xplorerclub')
                 .setStyle(ButtonStyle.Link);
+            const openseaAction = new ActionRowBuilder()
+                .addComponents(openseaButton);
             const infoEmbed = new EmbedBuilder()
                 .setColor('#0099ff')
                 .setTitle('Shrapnel Operators Collection Stats')
@@ -92,7 +94,7 @@ async function fetchWalletInfo(interaction, address) {
                     **Sales:** ${sales}\n
                     **Floor Price:** ${floorPrice} ${floorPriceSymbol}
                 `);
-            interaction.followUp({ embeds: [infoEmbed], components: [openseaButton] });
+            interaction.followUp({ embeds: [infoEmbed], components: [openseaAction] });
         }
     } catch (error) {
         console.error('Error fetching wallet info:', error);
