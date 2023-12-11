@@ -5,14 +5,6 @@ const dotenv = require('dotenv');
 dotenv.config();
 const COINMARKETCAP_API_KEY = process.env.COINMARKETCAP_API_KEY;
 
-async function checkAccess(interaction) {
-  if (interaction.guild.id == '1173381102522609746') {
-      return true;
-  } else {
-      return false;
-  }
-}
-
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('price')
@@ -24,10 +16,6 @@ module.exports = {
         .setRequired(false)),
 
 	async execute(interaction) {
-    const access = await checkAccess(interaction);
-    if (!access) {
-        return interaction.reply('You dont have acess to this bot.');
-    }
     const amount = interaction.options.getString('amount')
     try {
         // Make an API call to CoinMarketCap

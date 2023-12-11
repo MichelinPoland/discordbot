@@ -7,8 +7,6 @@ const EVERYNAME_API_KEY = process.env.EVERYNAME_API_KEY;
 const OPENSEA_API_KEY = process.env.OPENSEA_API_KEY;
 const COINMARKETCAP_API_KEY = process.env.COINMARKETCAP_API_KEY;
 
-
-
 async function checkDomain(domain) {
     try {
         const response = await axios.get(`https://api.everyname.xyz/forward?domain=${domain}`, {
@@ -53,7 +51,7 @@ async function fetchWalletInfo(interaction, address) {
 
             const bibEmbed = new EmbedBuilder()
                 .setColor('#0099ff')
-                .setTitle(`bib: ${name}`)
+                .setTitle(`BIB: ${name}`)
                 .setDescription(description)
                 .addField('Price', price, true)
                 .setImage(imageUrl);
@@ -62,7 +60,7 @@ async function fetchWalletInfo(interaction, address) {
         }
     } catch (error) {
         console.error(error);
-        interaction.followUp({ content: 'We are sorry but there was an error while fetching data pls try again later or contact support!', ephemeral: true });
+        interaction.reply({ content: 'We are sorry but there was an error while fetching data pls try again later or contact support!', ephemeral: true });
     }
 }
 
@@ -117,6 +115,7 @@ module.exports = {
 
     async execute(interaction) {
         let input = interaction.options.getString('address');
+        const access = await checkAccess(interaction);
         if (/^0x[a-fA-F0-9]{40}$/.test(input)) {
             console.log("Input is valid");
             await fetchWalletInfo(interaction, input);
@@ -128,7 +127,7 @@ module.exports = {
                 console.log(`wallet adress is${input}`)
                 await fetchWalletInfo(interaction, input);
             }
-        }
+            }
 
     },
 };
