@@ -73,7 +73,7 @@ async function fetchWalletInfo(interaction, address) {
             const name = nft.name;
             const description = nft.description;
             const imageUrl = nft.image_url;
-
+            console.log(nft)
             const openseaButton = new ButtonBuilder()
                 .setLabel('View on Opensea')
                 .setURL('https://opensea.io/collection/michelin3xplorerclub')
@@ -86,9 +86,10 @@ async function fetchWalletInfo(interaction, address) {
                 .setURL('https://opensea.io/collection/michelin3xplorerclub')
                 .setThumbnail(imageUrl)
                 .setDescription(`
-                    **Name:** ${name}\n
+                    **Name:**: ${name}\n
+                    **Owner:**: ${}
+                    **Price:**: ${price}\n
                     **Description:** ${description}\n
-                    **Owner:**: Wallet here
                 `);
             interaction.followUp({ embeds: [infoEmbed], components: [openseaAction] });
         }
