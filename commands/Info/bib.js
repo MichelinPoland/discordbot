@@ -74,7 +74,7 @@ async function fetchInfo(interaction, id) {
                 symbol: 'ETH',
             },
         });
-        console.log(openSeaData.data)
+        console.log(openSeaData)
         const nft = openSeaData.data
         const cmcData = cmcResponse.data.data;
         const ethPriceUsd = cmcData.ETH.quote.USD.price;
