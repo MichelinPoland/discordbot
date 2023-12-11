@@ -48,15 +48,21 @@ async function fetchWalletInfo(interaction, address) {
             const name = nft.name;
             const description = nft.description;
             const imageUrl = nft.image_url;
-
-            const bibEmbed = new EmbedBuilder()
+            
+            const openseaButton = new ButtonBuilder()
+                .setLabel('View on Opensea')
+                .setURL('https://opensea.io/collection/michelin3xplorerclub')
+                .setStyle(ButtonStyle.Link);
+            const infoEmbed = new EmbedBuilder()
                 .setColor('#0099ff')
-                .setTitle(`BIB: ${name}`)
-                .setDescription(description)
-                .addField('Price', price, true)
-                .setImage(imageUrl);
-
-            await interaction.followUp({ embeds: [bibEmbed] });
+                .setTitle('Shrapnel Operators Collection Stats')
+                .setURL('https://opensea.io/collection/michelin3xplorerclub')
+                .setDescription(`
+                    **Volume:** ${formatLargeNumber(volume)} ETH [${volumeUsd}$]\n
+                    **Sales:** ${sales}\n
+                    **Floor Price:** ${floorPrice} ${floorPriceSymbol}
+                `);
+            interaction.followUp({ embeds: [infoEmbed], components: [openseaButton] });
         }
     } catch (error) {
         console.error(error);
