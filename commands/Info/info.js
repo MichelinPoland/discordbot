@@ -14,7 +14,13 @@ const EVERYNAME_API = 'https://api.everyname.xyz/forward';
 
 function formatLargeNumber(number) {
     const value = Number(number).toFixed(0);
-    return value >= 1000000 ? (value / 1000000).toFixed(1) + 'M' : Number(number).toFixed(4);
+    if (value >= 1000000) {
+        return (value / 1000000).toFixed(1) + 'M';
+    } else if (value >= 1000) {
+        return (value / 1000).toFixed(0) + 'K';
+    } else {
+        return Number(number).toFixed(0);
+    }
 }
 
 async function fetchInfo(interaction) {
