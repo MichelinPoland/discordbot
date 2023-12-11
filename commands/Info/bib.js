@@ -75,7 +75,7 @@ async function fetchInfo(interaction, id) {
             },
         });
         console.log(openSeaData.data)
-        const nft = openSeaData.data
+        const nft = openSeaData.data.nft
         const cmcData = cmcResponse.data.data;
         const ethPriceUsd = cmcData.ETH.quote.USD.price;
         console.log(nft.owners)
