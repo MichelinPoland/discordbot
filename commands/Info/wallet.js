@@ -53,7 +53,7 @@ async function fetchWalletInfo(interaction, address) {
         // Iterate through the "nfts" array and send information for each item
         for (const nft of nftData.nfts) {
             const id = nft.identifier;
-            const volume = openSeaResponse.total.volume;
+            console.log(openSeaResponse)
             const price = await fetchbibPrice(id);
             const name = nft.name;
             const description = nft.description;
