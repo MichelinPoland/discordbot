@@ -79,8 +79,6 @@ async function fetchInfo(interaction, id) {
         const cmcData = cmcResponse.data.data;
         const ethPriceUsd = cmcData.ETH.quote.USD.price;
         console.log(nft.owners)
-        const owner = await checkName(nft.owners)
-
         const price = await fetchBibPrice(id);
         const name = nft.name;
         const description = nft.description;
