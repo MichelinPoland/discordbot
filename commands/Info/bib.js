@@ -173,7 +173,7 @@ module.exports = {
 
     async execute(interaction) {
         let input = interaction.options.getString('address');
-        if (typeof id === 'number' && id > 0 && id < 2401) {
+        if (id > 0 && id < 2401) {
             console.log(true);
         } else {
             interaction.reply({ content: 'Insert correct Id from rnage 0-2400', ephemeral: true });        }
