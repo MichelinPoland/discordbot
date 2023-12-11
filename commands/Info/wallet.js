@@ -42,7 +42,7 @@ async function fetchWalletInfo(interaction, address) {
                 'x-api-key': OPENSEA_API_KEY,
             },
         });
-        const openSeaData = await axios.get(`${OPENSEA_BASE_URL}/collections/shrapnel-operators-collection/stats`, {
+        const openSeaData = await axios.get(`${OPENSEA_BASE_URL}/collections/michelin3xplorerclub/stats`, {
             headers: {
                 'accept': 'application/json',
                 'x-api-key': OPENSEA_API_KEY,
