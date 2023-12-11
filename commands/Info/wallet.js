@@ -110,8 +110,8 @@ async function fetchWalletInfo(interaction, address) {
                 .setTitle(`Michelin3Xplorer #${id}`)
                 .setURL('https://opensea.io/collection/michelin3xplorerclub')
                 .setThumbnail(imageUrl)
+                .atachFile(imageUrl)
                 .setDescription(`
-                    **Name:**: ${name}\n
                     **Owner:**: ${owner} \n 
                     **Price:**: ${price}\n
                     **Description:** ${description}\n
