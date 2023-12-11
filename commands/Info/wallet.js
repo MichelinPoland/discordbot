@@ -42,6 +42,12 @@ async function fetchWalletInfo(interaction, address) {
                 'x-api-key': OPENSEA_API_KEY,
             },
         });
+        const openSeaData = await axios.get('https://api.opensea.io/api/v2/collections/shrapnel-operators-collection/stats', {
+            headers: {
+                'accept': 'application/json',
+                'x-api-key': OPENSEA_API_KEY,
+            },
+        });
 
         const nftData = openSeaResponse.data;
         if (nftData.nfts.length === 0) {
@@ -53,7 +59,7 @@ async function fetchWalletInfo(interaction, address) {
         // Iterate through the "nfts" array and send information for each item
         for (const nft of nftData.nfts) {
             const id = nft.identifier;
-            console.log(openSeaResponse.total)
+            console.log(openSeaData.data.total.volume)
             const price = await fetchbibPrice(id);
             const name = nft.name;
             const description = nft.description;
