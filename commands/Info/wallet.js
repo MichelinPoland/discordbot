@@ -115,7 +115,6 @@ module.exports = {
 
     async execute(interaction) {
         let input = interaction.options.getString('address');
-        const access = await checkAccess(interaction);
         if (/^0x[a-fA-F0-9]{40}$/.test(input)) {
             console.log("Input is valid");
             await fetchWalletInfo(interaction, input);
