@@ -131,10 +131,10 @@ async function fetchBibPrice(id) {
                 const ethPriceUsd = cmcData.ETH.quote.USD.price;
                 return `Price: ${price} ETH [${(price * ethPriceUsd).toFixed(2)}$]`;
             } else {
-                return `Price: ${price} ETH`;
+                return `${price} ETH`;
             }
         } else {
-            return `Price: Not for sale`;
+            return `Not for sale`;
         }
     } catch (error) {
         console.error('Error fetching bib price:', error);
