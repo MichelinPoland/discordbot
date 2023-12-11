@@ -88,12 +88,11 @@ async function fetchWalletInfo(interaction, address) {
         if (nftData.nfts.length === 0) {
             return interaction.reply(`${address} has no bibs`);
         }
-
-        await interaction.reply(`Returning list of all ${nftData.nfts.length} bibs owned by ${address}`);
+        const owner = await checkName(address)
+        await interaction.reply(`Returning list of all ${nftData.nfts.length} bibs owned by ${owner}`);
 
         for (const nft of nftData.nfts) {
             const id = nft.identifier;
-            const owner = await checkName(address)
             const price = await fetchBibPrice(id);
             const name = nft.name;
             const description = nft.description;
