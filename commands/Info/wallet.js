@@ -114,7 +114,6 @@ async function fetchWalletInfo(interaction, address) {
                 .setDescription(`
                     **Owner:**: ${owner} \n 
                     **Price:**: ${price}\n
-                    **Description:** ${description}\n
                 `);
             interaction.followUp({ embeds: [infoEmbed], components: [openseaAction] });
         }
