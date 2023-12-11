@@ -75,7 +75,7 @@ async function fetchWalletInfo(interaction, address) {
             const price = await fetchbibPrice(id);
             const name = nft.name;
             const description = nft.description;
-            const sales = openSeaData.total.sales;
+            const sales = openSeaData.data.total.sales;
             const imageUrl = nft.image_url;
             
             const openseaButton = new ButtonBuilder()
