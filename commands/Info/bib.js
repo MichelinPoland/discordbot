@@ -99,7 +99,7 @@ async function fetchInfo(interaction, id) {
                 **Owner:**: ${owner} \n 
                 **Price:**: ${price}\n
             `);
-        interaction.followUp({ embeds: [infoEmbed], components: [openseaAction] });
+        interaction.reply({ embeds: [infoEmbed], components: [openseaAction] });
     } catch (error) {
         console.error('Error fetching wallet info:', error);
     }
