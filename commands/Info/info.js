@@ -39,7 +39,6 @@ async function fetchInfo(interaction) {
         const ethPriceUsd = cmcData.ETH.quote.USD.price;
         const volume = openSeaData.data.total.volume;
         const volumeUsd = formatLargeNumber(ethPriceUsd * volume);
-        const price = await fetchBibPrice(id);
         const sales = openSeaData.data.total.sales;
         const floorPrice = openSeaData.data.total.floor_price;
         const floorPriceSymbol = openSeaData.data.total.floor_price_symbol;
