@@ -172,8 +172,8 @@ module.exports = {
                 .setRequired(true)),
 
     async execute(interaction, id) {
-        let input = interaction.options.getString('address');
-        if (id > 0 && id < 2401) {
+        let input = interaction.options.getString('id');
+        if (input > 0 && id < input) {
             console.log(true);
         } else {
             interaction.reply({ content: 'Insert correct Id from rnage 0-2400', ephemeral: true });        }
