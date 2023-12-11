@@ -47,9 +47,9 @@ async function checkName(address) {
             },
         });
         if(!response.data.socialHandle){
-            return response.data.socialHandle;
-        }else{
             return address
+        }else{
+            return response.data.socialHandle;
         }
     } catch (error) {
         console.error('Error checking domain:', error);
