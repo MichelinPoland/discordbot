@@ -71,7 +71,7 @@ async function fetchInfo(interaction) {
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('info')
-        .setDescription('Replies with collection info!')
+        .setDescription('Replies with collection info!'),
 
     async execute(interaction) {
         await fetchInfo(interaction);
