@@ -3,22 +3,23 @@ const axios = require('axios');
 const dotenv = require('dotenv');
 
 dotenv.config();
+
 const EVERYNAME_API_KEY = process.env.EVERYNAME_API_KEY;
 const OPENSEA_API_KEY = process.env.OPENSEA_API_KEY;
 const COINMARKETCAP_API_KEY = process.env.COINMARKETCAP_API_KEY;
 
+const OPENSEA_BASE_URL = 'https://api.opensea.io/api/v2';
+const CMC_BASE_URL = 'https://pro-api.coinmarketcap.com/v1';
+const EVERYNAME_API = 'https://api.everyname.xyz/forward';
+
 function formatLargeNumber(number) {
     const value = Number(number).toFixed(0);
-    if (value >= 1000000) {
-        return (value / 1000000).toFixed(1) + 'M';
-    } else {
-        return Number(number).toFixed(4);
-    }
+    return value >= 1000000 ? (value / 1000000).toFixed(1) + 'M' : Number(number).toFixed(4);
 }
 
 async function checkDomain(domain) {
     try {
-        const response = await axios.get(`https://api.everyname.xyz/forward?domain=${domain}`, {
+        const response = await axios.get(`${EVERYNAME_API}?domain=${domain}`, {
             headers: {
                 'Accept': 'application/json',
                 'api-key': EVERYNAME_API_KEY,
@@ -27,29 +28,28 @@ async function checkDomain(domain) {
 
         return response.data.address;
     } catch (error) {
-        console.error('Error:', error);
+        console.error('Error checking domain:', error);
         return null;
     }
 }
 
 async function fetchWalletInfo(interaction, address) {
-    console.log(`wallet adress is ${address}`)
+    console.log(`Wallet address is ${address}`);
     try {
-        // Make an API call to OpenSea to retrieve NFTs owned by the wallet
-        const openSeaResponse = await axios.get(`https://api.opensea.io/api/v2/chain/ethereum/account/${address}/nfts?collection=michelin3xplorerclub&limit=200`, {
+        const openSeaResponse = await axios.get(`${OPENSEA_BASE_URL}/chain/ethereum/account/${address}/nfts?collection=michelin3xplorerclub&limit=200`, {
             headers: {
                 'accept': 'application/json',
                 'x-api-key': OPENSEA_API_KEY,
             },
         });
-        const openSeaData = await axios.get('https://api.opensea.io/api/v2/collections/shrapnel-operators-collection/stats', {
+        const openSeaData = await axios.get(`${OPENSEA_BASE_URL}/collections/shrapnel-operators-collection/stats`, {
             headers: {
                 'accept': 'application/json',
                 'x-api-key': OPENSEA_API_KEY,
             },
         });
 
-        const cmcResponse = await axios.get('https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest', {
+        const cmcResponse = await axios.get(`${CMC_BASE_URL}/cryptocurrency/quotes/latest`, {
             headers: {
                 'X-CMC_PRO_API_KEY': COINMARKETCAP_API_KEY,
             },
@@ -57,7 +57,7 @@ async function fetchWalletInfo(interaction, address) {
                 symbol: 'ETH',
             },
         });
-        
+
         const cmcData = cmcResponse.data.data;
         const ethPriceUsd = cmcData.ETH.quote.USD.price;
         const nftData = openSeaResponse.data;
@@ -67,19 +67,18 @@ async function fetchWalletInfo(interaction, address) {
 
         await interaction.reply(`Returning list of all ${nftData.nfts.length} bibs owned by ${address}`);
 
-        // Iterate through the "nfts" array and send information for each item
         for (const nft of nftData.nfts) {
             const id = nft.identifier;
             const volume = openSeaData.data.total.volume;
             const volumeUsd = formatLargeNumber(ethPriceUsd * volume);
-            const price = await fetchbibPrice(id);
+            const price = await fetchBibPrice(id);
             const name = nft.name;
             const description = nft.description;
             const sales = openSeaData.data.total.sales;
             const floorPrice = openSeaData.data.total.floor_price;
             const floorPriceSymbol = openSeaData.data.total.floor_price_symbol;
             const imageUrl = nft.image_url;
-            
+
             const openseaButton = new ButtonBuilder()
                 .setLabel('View on Opensea')
                 .setURL('https://opensea.io/collection/michelin3xplorerclub')
@@ -96,17 +95,22 @@ async function fetchWalletInfo(interaction, address) {
             interaction.followUp({ embeds: [infoEmbed], components: [openseaButton] });
         }
     } catch (error) {
-        console.error(error);
-        //interaction.followUp({ content: 'We are sorry but there was an error while fetching data pls try again later or contact support!', ephemeral: true });
+        console.error('Error fetching wallet info:', error);
     }
 }
 
-async function fetchbibPrice(id) {
+async function fetchBibPrice(id) {
     try {
-        const openSeaResponse = await axios.get(`https://api.opensea.io/api/v2/orders/ethereum/seaport/listings?asset_contract_address=0x87ec044115cd9e0e09221031441640ee48b3a8f2&limit=1&order_by=created_date&token_ids=${id}`, {
+        const openSeaResponse = await axios.get(`${OPENSEA_BASE_URL}/orders/ethereum/seaport/listings`, {
             headers: {
                 'accept': 'application/json',
                 'x-api-key': OPENSEA_API_KEY,
+            },
+            params: {
+                asset_contract_address: '0x87ec044115cd9e0e09221031441640ee48b3a8f2',
+                limit: 1,
+                order_by: 'created_date',
+                token_ids: id,
             },
         });
 
@@ -114,8 +118,7 @@ async function fetchbibPrice(id) {
         if (openSeaData.orders[0]) {
             const price = openSeaData.orders[0].current_price / 1e+18;
 
-            // Make an API call to CoinMarketCap to get the ETH price
-            const cmcResponse = await axios.get('https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest', {
+            const cmcResponse = await axios.get(`${CMC_BASE_URL}/cryptocurrency/quotes/latest`, {
                 headers: {
                     'X-CMC_PRO_API_KEY': COINMARKETCAP_API_KEY,
                 },
@@ -135,7 +138,7 @@ async function fetchbibPrice(id) {
             return `Price: Not for sale`;
         }
     } catch (error) {
-        console.error(error);
+        console.error('Error fetching bib price:', error);
         return 'Error fetching data. Please try again later.';
     }
 }
@@ -155,15 +158,14 @@ module.exports = {
         if (/^0x[a-fA-F0-9]{40}$/.test(input)) {
             console.log("Input is valid");
             await fetchWalletInfo(interaction, input);
-            } else {
+        } else {
             const domain = await checkDomain(input);
             if (domain !== null) {
                 await fetchWalletInfo(interaction, domain);
             } else {
-                console.log(`wallet adress is${input}`)
+                console.log(`Wallet address is ${input}`);
                 await fetchWalletInfo(interaction, input);
             }
-            }
-
+        }
     },
 };
