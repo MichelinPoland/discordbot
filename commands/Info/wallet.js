@@ -97,7 +97,7 @@ async function fetchWalletInfo(interaction, address) {
         }
     } catch (error) {
         console.error(error);
-        interaction.followUp({ content: 'We are sorry but there was an error while fetching data pls try again later or contact support!', ephemeral: true });
+        //interaction.followUp({ content: 'We are sorry but there was an error while fetching data pls try again later or contact support!', ephemeral: true });
     }
 }
 
