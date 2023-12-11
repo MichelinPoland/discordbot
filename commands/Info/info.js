@@ -41,6 +41,8 @@ async function fetchInfo(interaction) {
         const volumeUsd = formatLargeNumber(ethPriceUsd * volume);
         const sales = openSeaData.data.total.sales;
         const floorPrice = openSeaData.data.total.floor_price;
+        const floorUsd = (ethPriceUsd * floorPrice);
+
         const floorPriceSymbol = openSeaData.data.total.floor_price_symbol;
 
         const openseaButton = new ButtonBuilder()
@@ -56,7 +58,7 @@ async function fetchInfo(interaction) {
             .setDescription(`
                 **Volume:** ${formatLargeNumber(volume)} ETH [${volumeUsd}$]\n
                 **Sales:** ${sales}\n
-                **Floor Price:** ${floorPrice} ${floorPriceSymbol}
+                **Floor Price:** ${floorPrice} ${floorPriceSymbol} [${floorUsd}$]
             `);
         interaction.reply({ embeds: [infoEmbed], components: [openseaAction] });
     } catch (error) {
