@@ -40,7 +40,7 @@ async function checkDomain(domain) {
 
 async function checkName(address) {
     try {
-        const response = await axios.get(`${EVERYNAME_API}/social-profile?address=${address}&provider=ens`, {
+        const response = await axios.get(`${EVERYNAME_API}/reverse/social-profile?address=${address}&provider=ens`, {
             headers: {
                 'Accept': 'application/json',
                 'api-key': EVERYNAME_API_KEY,
