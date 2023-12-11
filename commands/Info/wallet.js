@@ -46,6 +46,7 @@ async function checkName(address) {
                 'api-key': EVERYNAME_API_KEY,
             },
         });
+        console.log(response.data)
         if(!response.data.socialHandle){
             return address
         }else{
