@@ -5,8 +5,16 @@ const dotenv = require('dotenv');
 dotenv.config();
 const COINMARKETCAP_API_KEY = process.env.COINMARKETCAP_API_KEY;
 
+async function checkAccess(interaction) {
+  if (interaction.channelId == '1184451567173247016') {
+      return true;
+  } else {
+      return false;
+  }
+}
+
 module.exports = {
-	data: new SlashCommandBuilder()
+  data: new SlashCommandBuilder()
 		.setName('eth')
 		.setDescription('Replies with ETH price!')
     .addStringOption(option =>
@@ -16,7 +24,10 @@ module.exports = {
         .setRequired(false)),
 
 	async execute(interaction) {
-    console.log(interaction.channelId)
+    const access = await checkAccess(interaction);
+    if (!access) {
+      return interaction.reply('This bot can only be used in <#1184451567173247016>');
+    }
     const amount = interaction.options.getString('amount')
     try {
         // Make an API call to CoinMarketCap

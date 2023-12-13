@@ -23,6 +23,14 @@ function formatLargeNumber(number) {
     }
 }
 
+async function checkAccess(interaction) {
+    if (interaction.channelId == '1184451567173247016') {
+        return true;
+    } else {
+        return false;
+    }
+}
+
 async function fetchInfo(interaction) {
     try {
         const openSeaData = await axios.get(`${OPENSEA_BASE_URL}/collections/michelin3xplorerclub/stats`, {
@@ -79,6 +87,10 @@ module.exports = {
         .setDescription('Replies with collection info!'),
 
     async execute(interaction) {
+        const access = await checkAccess(interaction);
+        if (!access) {
+            return interaction.reply('This bot can only be used in <#1184451567173247016>');
+          }
         await fetchInfo(interaction);
     },
 };

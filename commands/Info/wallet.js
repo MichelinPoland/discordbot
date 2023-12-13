@@ -23,6 +23,14 @@ function formatLargeNumber(number) {
     }
 }
 
+async function checkAccess(interaction) {
+    if (interaction.channelId == '1184451567173247016') {
+        return true;
+    } else {
+        return false;
+    }
+}
+
 async function checkDomain(domain) {
     try {
         const response = await axios.get(`${EVERYNAME_API}/forward?domain=${domain}`, {
@@ -175,6 +183,10 @@ module.exports = {
                 .setRequired(true)),
 
     async execute(interaction) {
+        const access = await checkAccess(interaction);
+        if (!access) {
+            return interaction.reply('This bot can only be used in <#1184451567173247016>');
+          }
         let input = interaction.options.getString('address');
         if (/^0x[a-fA-F0-9]{40}$/.test(input)) {
             console.log("Input is valid");
