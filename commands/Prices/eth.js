@@ -16,7 +16,6 @@ module.exports = {
         .setRequired(false)),
 
 	async execute(interaction) {
-    console.log(interaction)
     const amount = interaction.options.getString('amount')
     try {
         // Make an API call to CoinMarketCap
