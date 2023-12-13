@@ -89,7 +89,7 @@ module.exports = {
     async execute(interaction) {
         const access = await checkAccess(interaction);
         if (!access) {
-            return interaction.reply('This bot can only be used in <#1184451567173247016>');
+            await interaction.reply({ content: 'This bot can only be used in <#1184451567173247016>', ephemeral: true });
           }
         await fetchInfo(interaction);
     },

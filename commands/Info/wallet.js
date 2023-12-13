@@ -185,7 +185,7 @@ module.exports = {
     async execute(interaction) {
         const access = await checkAccess(interaction);
         if (!access) {
-            return interaction.reply('This bot can only be used in <#1184451567173247016>');
+            await interaction.reply({ content: 'This bot can only be used in <#1184451567173247016>', ephemeral: true });
           }
         let input = interaction.options.getString('address');
         if (/^0x[a-fA-F0-9]{40}$/.test(input)) {
