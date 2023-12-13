@@ -7,7 +7,7 @@ const COINMARKETCAP_API_KEY = process.env.COINMARKETCAP_API_KEY;
 
 module.exports = {
 	data: new SlashCommandBuilder()
-		.setName('price')
+		.setName('eth')
 		.setDescription('Replies with ETH price!')
     .addStringOption(option =>
       option 
@@ -16,6 +16,7 @@ module.exports = {
         .setRequired(false)),
 
 	async execute(interaction) {
+    console.log(interaction)
     const amount = interaction.options.getString('amount')
     try {
         // Make an API call to CoinMarketCap
