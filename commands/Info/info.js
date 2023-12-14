@@ -78,7 +78,7 @@ async function fetchInfo(interaction) {
                 **Sales:** ${sales}\n
                 **Floor Price:** ${floorPrice} ${floorPriceSymbol} [${floorUsd}$]
                 **24h Floor AVG**: ${avgPrice} ${floorPriceSymbol} [${avgPriceUsd}$]
-                **Collection Value**: ${totalValue} ETH [${totalValueUsd}$] <24hFloorAvg*2400>
+                **Collection Value**: ${totalValue} ETH [${totalValueUsd}$] 
             `);
         interaction.reply({ embeds: [infoEmbed], components: [openseaAction] });
     } catch (error) {
