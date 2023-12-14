@@ -42,7 +42,7 @@ async function checkDomain(domain) {
         return response.data.address;
     } catch (error) {
         console.error('Error checking domain:', error);
-        return null;
+        return domain;
     }
 }
 
