@@ -73,8 +73,13 @@ async function fetchWalletInfo(interaction, address) {
             'x-api-key': OPENSEA_API_KEY,
         },
     });
-    console.log(openSeaResponse.data)
-    if(interaction.user.User.id == "test"){}
+    const userId = interaction.user.User.id
+    const userBio = openSeaResponse.data.bio;
+    if(userBio..includes(userId)){
+        interaction.reply('true')
+    }else{
+        interaction.reply('false')
+    }
 }
 
 
