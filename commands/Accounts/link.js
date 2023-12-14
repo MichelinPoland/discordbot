@@ -67,13 +67,14 @@ async function checkName(address) {
 }
 async function fetchWalletInfo(interaction, address) {
     console.log(`Wallet address is ${address}`);
-    console.log(interaction)
     const openSeaResponse = await axios.get(`${OPENSEA_BASE_URL}accounts/${address}`, {
         headers: {
             'accept': 'application/json',
             'x-api-key': OPENSEA_API_KEY,
         },
     });
+    console.log(openSeaResponse)
+    if(interaction.user.User.id == "test")
 }
 
 
