@@ -74,7 +74,7 @@ async function fetchInfo(interaction) {
             .setTitle('Michelin 3XPLORE Collection Stats')
             .setURL('https://opensea.io/collection/michelin3xplorerclub')
             .setDescription(`
-                **Volume:** ${formatLargeNumber(volume)} ETH [${volumeUsd}$]\n
+                **Volume:** ${formatLargeNumber(volume)} ETH [${volumeUsd}$]
                 **Sales:** ${sales}\n
                 **Floor Price:** ${floorPrice} ${floorPriceSymbol} [${floorUsd}$]
                 **24h Floor AVG**: ${avgPrice} ${floorPriceSymbol} [${avgPriceUsd}$]
