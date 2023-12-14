@@ -52,6 +52,10 @@ async function fetchInfo(interaction) {
         const cmcData = cmcResponse.data.data;
         const ethPriceUsd = cmcData.ETH.quote.USD.price;
         const volume = openSeaData.data.total.volume;
+        const avgPrice = openSeaData.data.intervals[0].avarage_price;
+        const avgPriceUsd = (avgPrice * ethPriceUsd).toFixed(0);
+        const totalValue = (openSeaData.data.intervals[0].avarage_price*2400).toFixed(0);
+        const totalValueUsd = (ethPriceUsd * totalValue).toFixed(0);
         const volumeUsd = formatLargeNumber(ethPriceUsd * volume);
         const sales = openSeaData.data.total.sales;
         const floorPrice = openSeaData.data.total.floor_price;
@@ -73,6 +77,8 @@ async function fetchInfo(interaction) {
                 **Volume:** ${formatLargeNumber(volume)} ETH [${volumeUsd}$]\n
                 **Sales:** ${sales}\n
                 **Floor Price:** ${floorPrice} ${floorPriceSymbol} [${floorUsd}$]
+                **Floor AVG**: ${avgPrice} ${floorPriceSymbol} [${avgPriceUsd}$]
+                **Collection Value**: ${totalValue} ETH [${totalValueUsd}$]
             `);
         interaction.reply({ embeds: [infoEmbed], components: [openseaAction] });
     } catch (error) {
