@@ -53,12 +53,12 @@ async function fetchInfo(interaction) {
         const ethPriceUsd = cmcData.ETH.quote.USD.price;
         const volume = openSeaData.data.total.volume;
         const avgPrice = openSeaData.data.intervals[0].average_price;
-        const avgPriceUsd = (avgPrice * ethPriceUsd).toFixed(0);
+        const avgPriceUsd = (avgPrice * ethPriceUsd).toFixed(4);
         const totalValue = (openSeaData.data.intervals[0].average_price*2400).toFixed(0);
-        const totalValueUsd = (ethPriceUsd * totalValue).toFixed(0);
+        const totalValueUsd = formatLargeNumber(ethPriceUsd * totalValue);
         const volumeUsd = formatLargeNumber(ethPriceUsd * volume);
         const sales = openSeaData.data.total.sales;
-        const floorPrice = openSeaData.data.total.floor_price;
+        const floorPrice = openSeaData.data.total.floor_price.toFixed(4);
         const floorUsd = (ethPriceUsd * floorPrice).toFixed(0);
 
         const floorPriceSymbol = openSeaData.data.total.floor_price_symbol;
