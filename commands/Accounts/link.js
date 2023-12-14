@@ -74,7 +74,7 @@ async function fetchWalletInfo(interaction, address) {
         },
     });
     console.log(interaction.user);
-    const userId = interaction.user.User.id;
+    const userId = interaction.user
     const userBio = openSeaResponse.data.bio;
     if(userBio.includes(userId)){
         interaction.reply('true')
