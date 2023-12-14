@@ -74,7 +74,7 @@ async function fetchWalletInfo(interaction, address) {
         },
     });
     console.log(openSeaResponse)
-    if(interaction.user.User.id == "test")
+    if(interaction.user.User.id == "test"){}
 }
 
 
