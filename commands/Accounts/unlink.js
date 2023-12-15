@@ -92,14 +92,7 @@ async function fetchWalletInfo(interaction, address) {
         },
     });
     const userId = interaction.user.id;
-    const userBio = openSeaResponse.data.bio;
-    if(userBio.includes(userId)){
-        const responseLink = await unlinkWalletFromDiscord(userId, address);
-        interaction.reply(responseLink)
-
-    }else{
-        interaction.reply('Wallet unlinking failed.')
-    }
+    interaction.reply(responseLink)
 }
 
 
