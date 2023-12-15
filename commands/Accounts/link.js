@@ -96,7 +96,7 @@ async function fetchWalletInfo(interaction, address) {
         interaction.reply(responseLink)
 
     }else{
-        interaction.reply('Wallet linking failed. Make sure to add ${userId} to your OpenSea bio.')
+        interaction.reply(`Wallet linking failed. Make sure to add ${userId} to your OpenSea bio.`)
     }
 }
 
