@@ -92,7 +92,12 @@ async function fetchWalletInfo(interaction, address) {
         },
     });
     const userId = interaction.user.id;
+    const responseLink = await unlinkWalletFromDiscord(userId, address);
     interaction.reply(responseLink)
+
+    }else{
+        interaction.reply('Wallet unlinking failed.')
+    }
 }
 
 
