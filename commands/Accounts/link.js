@@ -25,7 +25,8 @@ async function linkWalletToDiscord(discord, wallet) {
         if (response.data.success) {
             return `Wallet linked successfully: ${response.data.message}`;
         } else {
-            return `Error linking wallet: ${response.data.message}`;
+            console.log(response.data)
+            return `Error linking wallet: ${response.data.error}`;
         }
     } catch (error) {
         return `Error linking wallet: ${error.message}`;
