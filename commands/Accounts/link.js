@@ -86,7 +86,7 @@ async function fetchWalletInfo(interaction, address) {
     const userId = interaction.user.id;
     const userBio = openSeaResponse.data.bio;
     if(userBio.includes(userId)){
-        const responseLink = await linkWalletToDiscord(discord, wallet);
+        const responseLink = await linkWalletToDiscord(userId, address);
         interaction.reply(responseLink)
 
     }else{
