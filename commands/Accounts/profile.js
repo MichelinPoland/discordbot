@@ -32,6 +32,8 @@ module.exports = {
 
     async execute(interaction) {
         const access = await checkAccess(interaction);
+        let input = interaction.options.getString('address');
+        console.log(input)
         if (!access) {
             return await interaction.reply({ content: 'This bot can only be used in <#1184451567173247016>', ephemeral: true });
         }
@@ -49,7 +51,6 @@ module.exports = {
 
         for (const wallet of linkedWallets) {
             embed.addFields({ name: 'Wallet Address:', value: `${wallet}`, inline: true })
-
         }
 
         return await interaction.reply({ embeds: [embed] });
