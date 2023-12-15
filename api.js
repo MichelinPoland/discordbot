@@ -14,20 +14,34 @@ app.use(bodyParser.json());
 
 // Link Discord account to a wallet
 app.post('/link', (req, res) => {
-  const { discord, wallet } = req.query;
-
-  if (!discord || !wallet) {
-    return res.status(400).json({ error: 'Missing required parameters' });
-  }
-
-  db.run('INSERT INTO wallet_links (discord_id, wallet_address) VALUES (?, ?)', [discord, wallet], (err) => {
-    if (err) {
-      return res.status(500).json({ error: 'Internal server error' });
+    const { discord, wallet } = req.query;
+  
+    if (!discord || !wallet) {
+      return res.status(400).json({ error: 'Missing required parameters' });
     }
-
-    res.json({ success: true, message: 'Wallet linked successfully' });
+  
+    // Check if the wallet address is already linked to a Discord account
+    db.get('SELECT * FROM wallet_links WHERE wallet_address = ?', [wallet], (err, row) => {
+      if (err) {
+        return res.status(500).json({ error: 'Internal server error' });
+      }
+  
+      if (row) {
+        // Wallet is already linked, return an error
+        return res.status(409).json({ error: `This wallet is already linked to @${row.discord_id}` });
+      }
+  
+      // Wallet is not linked, proceed to insert the new link
+      db.run('INSERT INTO wallet_links (discord_id, wallet_address) VALUES (?, ?)', [discord, wallet], (err) => {
+        if (err) {
+          return res.status(500).json({ error: 'Internal server error' });
+        }
+  
+        res.json({ success: true, message: 'Wallet linked successfully' });
+      });
+    });
   });
-});
+  
 
 // Get linked wallets for a Discord account
 app.get('/wallets/:discord', (req, res) => {
