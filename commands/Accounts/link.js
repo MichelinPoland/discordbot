@@ -44,7 +44,7 @@ async function checkAccess(interaction) {
     }
 }
 
-async function checkDomain(domain) {
+async function checkDomain(domain, interaction) {
     try {
         const response = await axios.get(`${EVERYNAME_API}/forward?domain=${domain}`, {
             headers: {
@@ -52,7 +52,9 @@ async function checkDomain(domain) {
                 'api-key': EVERYNAME_API_KEY,
             },
         });
-        console.log(response.data)
+        if(!response.data.sucess){
+            return interaction.reply('The ENS does not exist.')
+        }
         return response.data.address;
     } catch (error) {
         console.error('Error checking domain:', error);
@@ -119,7 +121,7 @@ module.exports = {
             console.log("Input is valid");
             await fetchWalletInfo(interaction, input);
         } else {
-            const domain = await checkDomain(input);
+            const domain = await checkDomain(input, interaction);
             if (domain !== null) {
                 await fetchWalletInfo(interaction, domain);
             } else {
