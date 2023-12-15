@@ -15,7 +15,7 @@ const EVERYNAME_API = 'https://api.everyname.xyz';
 
 async function unlinkWalletFromDiscord(discord, wallet) {
     try {
-        const response = await axios.post('http://129.159.251.230:3070/unlink', null, {
+        const response = await axios.delete('http://129.159.251.230:3070/unlink', null, {
             params: {
                 discord: discord,
                 wallet: wallet,
