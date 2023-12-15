@@ -23,12 +23,12 @@ async function linkWalletToDiscord(discord, wallet) {
         });
 
         if (response.data.success) {
-            return(true);
+            return('Wallet linked successfully:', response.data.message);
         } else {
-            return(false);
+            return('Error linking wallet:', response.data.error);
         }
     } catch (error) {
-        return(false);
+        return('Error linking wallet:', error.message);
     }
 }
 
@@ -87,11 +87,7 @@ async function fetchWalletInfo(interaction, address) {
     const userBio = openSeaResponse.data.bio;
     if(userBio.includes(userId)){
         const responseLink = await linkWalletToDiscord(userId, address);
-        if(responseLink){
-            interaction.reply(`${address} sucessfully linked to <@${userId}>`)
-        }else{
-            interaction.reply('Wallet linking failed. Make sure to add ${userId} to your OpenSea bio.')
-        }
+        interaction.reply(responseLink)
 
     }else{
         interaction.reply('Wallet linking failed. Make sure to add ${userId} to your OpenSea bio.')
