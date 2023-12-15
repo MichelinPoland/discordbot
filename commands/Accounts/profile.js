@@ -45,7 +45,7 @@ module.exports = {
 
         const embed = new EmbedBuilder()
             .setColor('#0099ff')
-            .setTitle(`Linked Wallets for ${discord}`);
+            .setTitle(`Linked Wallets for <@${discord}>`);
 
         for (const wallet of linkedWallets) {
             embed.addFields({ name: 'Wallet Address:', value: `${wallet}`, inline: true })
