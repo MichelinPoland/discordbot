@@ -34,10 +34,10 @@ module.exports = {
                 .setName('user')
                 .setDescription('Specify the user to check')
                 .setRequired(false)),
-                
+
     async execute(interaction) {
         const access = await checkAccess(interaction);
-        let input = interaction.options.getString('address');
+        let input = interaction.options.getUser('user');
         console.log(input)
         if (!access) {
             return await interaction.reply({ content: 'This bot can only be used in <#1184451567173247016>', ephemeral: true });
