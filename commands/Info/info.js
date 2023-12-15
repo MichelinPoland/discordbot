@@ -90,12 +90,7 @@ async function fetchInfo(interaction) {
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('info')
-        .setDescription('Replies with collection info!')
-        .addUserOption(option =>
-            option
-                .setName('user')
-                .setDescription('Specify the user to check')
-                .setRequired(false)),
+        .setDescription('Replies with collection info!'),
 
     async execute(interaction) {
         const access = await checkAccess(interaction);

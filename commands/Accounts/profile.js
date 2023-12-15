@@ -28,8 +28,13 @@ async function getLinkedWallets(discord) {
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('profile')
-        .setDescription('Displays linked wallets for a Discord user'),
-
+        .setDescription('Displays linked wallets for a Discord user')
+        .addUserOption(option =>
+            option
+                .setName('user')
+                .setDescription('Specify the user to check')
+                .setRequired(false)),
+                
     async execute(interaction) {
         const access = await checkAccess(interaction);
         let input = interaction.options.getString('address');
