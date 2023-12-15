@@ -60,8 +60,12 @@ app.get('/wallets/:discord', (req, res) => {
 app.delete('/unlink', (req, res) => {
   const { discord, wallet } = req.query;
 
-  if (!discord || !wallet) {
-    return res.status(400).json({ error: 'Missing required parameters' });
+  if (!discord && !wallet) {
+    return res.status(400).json({ error: 'Missing required parameters {discord} & {wallet}' });
+  }else if(!discord){
+    return res.status(400).json({ error: 'Missing required parameters {discord}' });
+  }else if(!wallet){
+    return res.status(400).json({ error: 'Missing required parameters {wallet}' });
   }
 
   db.run('DELETE FROM wallet_links WHERE discord_id = ? AND wallet_address = ?', [discord, wallet], (err) => {
