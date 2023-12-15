@@ -48,7 +48,8 @@ module.exports = {
             .setTitle(`Linked Wallets for ${discord}`);
 
         for (const wallet of linkedWallets) {
-            embed.addFields('Wallet Address', wallet, true);
+            embed.addFields({ name: 'Wallet Address:', value: `${wallet}`, inline: true })
+
         }
 
         return await interaction.reply({ embeds: [embed] });
