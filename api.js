@@ -28,7 +28,7 @@ app.post('/link', (req, res) => {
   
       if (row) {
         // Wallet is already linked, return an error
-        return res.status(409).json({ error: `This wallet is already linked to @${row.discord_id}` });
+        return(`This wallet is already linked to ${row.discord_id}`);
       }
   
       // Wallet is not linked, proceed to insert the new link
