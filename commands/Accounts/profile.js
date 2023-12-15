@@ -43,13 +43,11 @@ module.exports = {
             return await interaction.reply({ content: 'This bot can only be used in <#1184451567173247016>', ephemeral: true });
         }
         if(!input){
-            const discord = interaction.user.id;
-            const linkedWallets = await getLinkedWallets(discord);
-
+            let discord = interaction.user.id;
         }else{
-            const discord = input.id;
-            const linkedWallets = await getLinkedWallets(discord);
+            let discord = input.id;
         }
+        const linkedWallets = await getLinkedWallets(discord);
 
         if (linkedWallets.length === 0) {
             return await interaction.reply('This user has not linked any wallets yet.');
