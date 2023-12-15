@@ -53,7 +53,7 @@ async function checkDomain(domain) {
             },
         });
         console.log(response.data)
-        if(!response.data.sucess){
+        if(response.data.sucess == false){
             return (false)
         }else{
             return response.data.address;
