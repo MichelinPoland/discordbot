@@ -34,8 +34,6 @@ async function linkWalletToDiscord(discord, wallet) {
     }
 }
 
-
-
 async function checkAccess(interaction) {
     if (interaction.channelId == '1184451567173247016' || interaction.channelId == '1181352519872553000') {
         return true;
