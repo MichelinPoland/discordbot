@@ -12,7 +12,6 @@ const OPENSEA_BASE_URL = 'https://api.opensea.io/api/v2';
 const CMC_BASE_URL = 'https://pro-api.coinmarketcap.com/v1';
 const EVERYNAME_API = 'https://api.everyname.xyz';
 
-const axios = require('axios');
 
 async function linkWalletToDiscord(discord, wallet) {
     try {
