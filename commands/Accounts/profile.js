@@ -36,17 +36,17 @@ module.exports = {
                 .setRequired(false)),
 
     async execute(interaction) {
-        let discord = interaction.user.id;
         const access = await checkAccess(interaction);
+        let discord
         let input = interaction.options.getUser('user');
         console.log(input)
         if (!access) {
             return await interaction.reply({ content: 'This bot can only be used in <#1184451567173247016>', ephemeral: true });
         }
         if(!input){
-            let discord = interaction.user.id;
+            discord = interaction.user.id;
         }else{
-            let discord = input.id;
+            discord = input.id;
         }
         const linkedWallets = await getLinkedWallets(discord);
 
