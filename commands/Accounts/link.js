@@ -124,7 +124,7 @@ module.exports = {
             await fetchWalletInfo(interaction, input);
         } else {
             const domain = await checkDomain(input);
-            if(!domain){
+            if(domain == false){
                 return interaction.reply(`ENS does not exist`)
             }
             if (domain !== null) {
