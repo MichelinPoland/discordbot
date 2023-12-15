@@ -44,10 +44,12 @@ module.exports = {
         }
         if(!input){
             const discord = interaction.user.id;
+            const linkedWallets = await getLinkedWallets(discord);
+
         }else{
             const discord = input.id;
+            const linkedWallets = await getLinkedWallets(discord);
         }
-        const linkedWallets = await getLinkedWallets(discord);
 
         if (linkedWallets.length === 0) {
             return await interaction.reply('This user has not linked any wallets yet.');
