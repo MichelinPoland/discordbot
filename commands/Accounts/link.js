@@ -54,8 +54,9 @@ async function checkDomain(domain) {
         });
         if(!response.data.sucess){
             return (false)
+        }else{
+            return response.data.address;
         }
-        return response.data.address;
     } catch (error) {
         console.error('Error checking domain:', error);
         return domain;
