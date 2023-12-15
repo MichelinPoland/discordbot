@@ -16,11 +16,7 @@ async function checkAccess(interaction) {
 
 async function getLinkedWallets(discord) {
     try {
-        const response = await axios.get('http://129.159.251.230:3070/profile', {
-            params: {
-                discord: discord,
-            },
-        });
+        const response = await axios.get(`http://129.159.251.230:3070/wallets/${discord}`)
 
         return response.data.wallets;
     } catch (error) {
@@ -32,12 +28,7 @@ async function getLinkedWallets(discord) {
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('profile')
-        .setDescription('Displays linked wallets for a Discord user')
-        .addStringOption(option =>
-            option
-                .setName('discord')
-                .setDescription('Specify the Discord user')
-                .setRequired(true)),
+        .setDescription('Displays linked wallets for a Discord user'),
 
     async execute(interaction) {
         const access = await checkAccess(interaction);
@@ -45,7 +36,7 @@ module.exports = {
             return await interaction.reply({ content: 'This bot can only be used in <#1184451567173247016>', ephemeral: true });
         }
 
-        const discord = interaction.options.getString('discord');
+        const discord = interaction.user.id;
         const linkedWallets = await getLinkedWallets(discord);
 
         if (linkedWallets.length === 0) {
