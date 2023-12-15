@@ -62,20 +62,39 @@ app.delete('/unlink', (req, res) => {
 
   if (!discord && !wallet) {
     return res.status(400).json({ error: 'Missing required parameters {discord} & {wallet}' });
-  }else if(!discord){
+  } else if (!discord) {
     return res.status(400).json({ error: 'Missing required parameters {discord}' });
-  }else if(!wallet){
+  } else if (!wallet) {
     return res.status(400).json({ error: 'Missing required parameters {wallet}' });
   }
 
-  db.run('DELETE FROM wallet_links WHERE discord_id = ? AND wallet_address = ?', [discord, wallet], (err) => {
+  // Check if the wallet is linked to any Discord account
+  db.get('SELECT * FROM wallet_links WHERE wallet_address = ?', [wallet], (err, row) => {
     if (err) {
       return res.status(500).json({ error: 'Internal server error' });
     }
 
-    res.json({ success: true, message: 'Wallet unlinked successfully' });
+    if (!row) {
+      // Wallet is not linked to any Discord account
+      return res.status(404).json({ error: 'This wallet is not linked to any Discord account' });
+    }
+
+    if (row.discord_id !== discord) {
+      // Wallet is linked to a different Discord account
+      return res.status(409).json({ error: `This wallet is linked to a different Discord account: <@${row.discord_id}>` });
+    }
+
+    // Wallet is linked to the specified Discord account, proceed to unlink
+    db.run('DELETE FROM wallet_links WHERE discord_id = ? AND wallet_address = ?', [discord, wallet], (err) => {
+      if (err) {
+        return res.status(500).json({ error: 'Internal server error' });
+      }
+
+      res.json({ success: true, message: 'Wallet unlinked successfully' });
+    });
   });
 });
+
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
