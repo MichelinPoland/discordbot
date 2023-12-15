@@ -52,6 +52,7 @@ async function checkDomain(domain) {
                 'api-key': EVERYNAME_API_KEY,
             },
         });
+        console.log(response.data)
         return response.data.address;
     } catch (error) {
         console.error('Error checking domain:', error);
