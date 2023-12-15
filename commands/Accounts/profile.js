@@ -36,6 +36,7 @@ module.exports = {
                 .setRequired(false)),
 
     async execute(interaction) {
+        let discord = interaction.user.id;
         const access = await checkAccess(interaction);
         let input = interaction.options.getUser('user');
         console.log(input)
