@@ -12,16 +12,27 @@ const OPENSEA_BASE_URL = 'https://api.opensea.io/api/v2';
 const CMC_BASE_URL = 'https://pro-api.coinmarketcap.com/v1';
 const EVERYNAME_API = 'https://api.everyname.xyz';
 
-function formatLargeNumber(number) {
-    const value = Number(number).toFixed(0);
-    if (value >= 1000000) {
-        return (value / 1000000).toFixed(1) + 'M';
-    } else if (value >= 1000) {
-        return (value / 1000).toFixed(0) + 'K';
-    } else {
-        return Number(number).toFixed(0);
+const axios = require('axios');
+
+async function linkWalletToDiscord(discord, wallet) {
+    try {
+        const response = await axios.post('http://129.159.251.230:3070/link', null, {
+            params: {
+                discord: discord,
+                wallet: wallet,
+            },
+        });
+
+        if (response.data.success) {
+            return('Wallet linked successfully:', response.data.message);
+        } else {
+            return('Error linking wallet:', response.data.error);
+        }
+    } catch (error) {
+        return('Error linking wallet:', error.message);
     }
 }
+
 
 async function checkAccess(interaction) {
     if (interaction.channelId == '1184451567173247016' || interaction.channelId == '1181352519872553000') {
@@ -76,9 +87,11 @@ async function fetchWalletInfo(interaction, address) {
     const userId = interaction.user.id;
     const userBio = openSeaResponse.data.bio;
     if(userBio.includes(userId)){
-        interaction.reply('true')
+        const responseLink = await linkWalletToDiscord(discord, wallet);
+        interaction.reply(responseLink)
+
     }else{
-        interaction.reply('false')
+        interaction.reply('Wallet linking failed. Make sure to add ${userId} to your OpenSea bio.')
     }
 }
 
