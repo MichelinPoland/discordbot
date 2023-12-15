@@ -52,9 +52,6 @@ async function checkDomain(domain, interaction) {
                 'api-key': EVERYNAME_API_KEY,
             },
         });
-        if(!response.data.sucess){
-            return interaction.reply('The ENS does not exist.')
-        }
         return response.data.address;
     } catch (error) {
         console.error('Error checking domain:', error);
@@ -122,7 +119,9 @@ module.exports = {
             await fetchWalletInfo(interaction, input);
         } else {
             const domain = await checkDomain(input, interaction);
-            if (domain !== null) {
+            if(!domain.data.sucess){
+                return interaction.reply('ENS does not exist.')
+            }else if (domain !== null) {
                 await fetchWalletInfo(interaction, domain);
             } else {
                 console.log(`Wallet address is ${input}`);
